@@ -13,10 +13,39 @@ router.route('/').post((req, res, next) => {
   });
 });
 
-// GET All Users
+// GET All Students
 router.route('/').get((req, res, next) => {
   studentModel.find((error, data) => {
-    if (error) next(error);
+    if (error) return next(error);
+    return res.json(data);
+  });
+});
+
+// GET Student by ID
+router.route('/:id').get((req, res, next) => {
+  studentModel.findById(req.params.id, (error, data) => {
+    if (error) return next(error);
+    return res.json(data);
+  });
+});
+
+// UPDATE Student by ID
+router.route('/:id').put((req, res, next) => {
+  studentModel.findByIdAndUpdate(
+    req.params.id,
+    { $set: req.body },
+    { new: true },
+    (error, data) => {
+      if (error) return next(error);
+      return res.json(data);
+    }
+  );
+});
+
+// DELETE Student by ID
+router.route('/:id').delete((req, res, next) => {
+  studentModel.findByIdAndRemove(req.params.id, (error, data) => {
+    if (error) return next(error);
     return res.json(data);
   });
 });
