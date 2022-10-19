@@ -9,7 +9,14 @@ const studentModel = require('../models/student');
 router.route('/').post((req, res, next) => {
   studentModel.create(req.body, (error, data) => {
     if (error) return next(error);
-    console.log(data);
+    return res.json(data);
+  });
+});
+
+// GET All Users
+router.route('/').get((req, res, next) => {
+  studentModel.find((error, data) => {
+    if (error) next(error);
     return res.json(data);
   });
 });
